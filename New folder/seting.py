@@ -309,19 +309,33 @@ def loginPage():
                         cur.execute("select * from products where Pname=%s",(value[2]))
                         defrow = cur.fetchall()
                         for r in defrow:
-                            print(r[5])
+                            #print(r[5])1
                             if r[5] <= "":
                                 print(a)
+                                con = pymysql.connect(host="localhost", user="root", password="", database="employee" )
+                                cur = con.cursor()
+                                cur.execute("update products set Defected=%s where PName=%s",(a,value[2]))
+                                con.commit()
+                                con.close
+                                messagebox.showinfo("Defected Product", "Sorry for inconvenience. Thanks for your valuable feedback. It will help to make our services more better.")
+                                dNames.delete(0, END)
+                                DNa["text"] = ""
+                                Dids["text"] = ""
                             else:
-                                print(int(r[5]) + a)
+                                #print(int(r[5]) + a)
+                                b = (int(r[5]) + a)
+                                
+                                con = pymysql.connect(host="localhost", user="root", password="", database="employee" )
+                                cur = con.cursor()
+                                cur.execute("update products set Defected=%s where PName=%s",(b,value[2]))
+                                con.commit()
+                                con.close
+                                messagebox.showinfo("Defected Product", "Sorry for inconvenience. Thanks for your valuable feedback. It will help to make our services more better.")
+                                dNames.delete(0, END)
+                                DNa["text"] = ""
+                                Dids["text"] = ""
                     except Exception as e:
-                        print(e)
-                        #con = pymysql.connect(host="localhost", user="root", password="", database="employee" )
-                        #cur = con.cursor()
-                        #cur.execute("update products set Defected=%s where PName=%s",(dNames.get(),value[2]))
-                        #con.commit()
-                        #con.close
-                        #messagebox.showinfo("Defected Product", "Sorry for inconvenience. Thanks for your valuable feedback. It will help to make our services more better.")
+                        messagebox.showinfo("Defected Product", e)
                 except:
                     print(":ERROR")
         except Exception as e:
